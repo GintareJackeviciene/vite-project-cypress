@@ -107,6 +107,7 @@ const RegistrationForm = () => {
             name="dob"
             value={formData.dob}
             onChange={handleChange}
+            data-cy="dob-input"
           />
           {errors.dob && <p className="error">{errors.dob}</p>}
         </div>
