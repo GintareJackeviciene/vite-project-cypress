@@ -1,11 +1,13 @@
 describe("Registration Form", () => {
-  beforeEach(() => {
-    cy.visit("http://localhost:5173/");
-  });
+  const username = "vardas";
+  const email = "testas@testa.com";
+  const password = "123456";
+  const birth = "1985-01-09";
+  const expectedAge = "39";
 
-  it("displays Registration Form heading", () => {
-    const element1 = cy.contains("h2", "Registration Form");
-    element1.should("be.visible");
+  beforeEach(() => {
+    cy.goTo();
+    cy.contains(/Registration Form/i);
   });
 
   it("displays the form with empty fields", () => {
@@ -28,20 +30,14 @@ describe("Registration Form", () => {
   });
 
   it("customer is able to fill Registration form", () => {
-    cy.get('[name="username"]').type("vardas");
-    cy.get('[name="email"]').type("testas@testa.com");
-    cy.get('[name="password"]').type("123456");
-    cy.get("[data-cy=dob-input]").type("1985-01-09");
-    cy.get("button")
-      .contains(/Submit/i)
-      .click();
-    cy.contains("Age: 39").should("be.visible");
+    cy.login(username, email, password, birth);
+    cy.contains(expectedAge).should("be.visible");
   });
 
   it("should not be able to fill form with empty username", () => {
-    cy.get('[name="email"]').type("testas@testa.com");
-    cy.get('[name="password"]').type("123456");
-    cy.get("[data-cy=dob-input]").type("1985-01-09");
+    cy.get('[name="email"]').type(email);
+    cy.get('[name="password"]').type(password);
+    cy.get("[data-cy=dob-input]").type(birth);
     cy.get("button")
       .contains(/Submit/i)
       .click();
@@ -49,9 +45,9 @@ describe("Registration Form", () => {
   });
 
   it("should not be able to fill form with empty email", () => {
-    cy.get('[name="username"]').type("vardas");
-    cy.get('[name="password"]').type("123456");
-    cy.get("[data-cy=dob-input]").type("1985-01-09");
+    cy.get('[name="username"]').type(username);
+    cy.get('[name="password"]').type(password);
+    cy.get("[data-cy=dob-input]").type(birth);
     cy.get("button")
       .contains(/Submit/i)
       .click();
@@ -59,9 +55,9 @@ describe("Registration Form", () => {
   });
 
   it("should not be able to fill form with empty password", () => {
-    cy.get('[name="username"]').type("vardas");
-    cy.get('[name="email"]').type("testas@testa.com");
-    cy.get("[data-cy=dob-input]").type("1985-01-09");
+    cy.get('[name="username"]').type(username);
+    cy.get('[name="email"]').type(email);
+    cy.get("[data-cy=dob-input]").type(birth);
     cy.get("button")
       .contains(/Submit/i)
       .click();
@@ -69,9 +65,9 @@ describe("Registration Form", () => {
   });
 
   it("should not be able to fill form with empty Date of Birth:", () => {
-    cy.get('[name="username"]').type("vardas");
-    cy.get('[name="email"]').type("testas@testa.com");
-    cy.get('[name="password"]').type("123456");
+    cy.get('[name="username"]').type(username);
+    cy.get('[name="email"]').type(email);
+    cy.get('[name="password"]').type(password);
     cy.get("button")
       .contains(/Submit/i)
       .click();
